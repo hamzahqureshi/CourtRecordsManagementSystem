@@ -30,8 +30,39 @@ public class FileParsingService {
         fileDetails.setRespondent(getRespondent(tokenizedDocument));
         fileDetails.setDateOfHearing(getDateOfHearing(tokenizedDocument));
         fileDetails.setAdvocatesForAppellant(getAdvForAppellant(tokenizedDocument));
+        fileDetails.setAdvocatesForRespondent(getAdvocateForRespondent(tokenizedDocument));
+        fileDetails.setJudgeName(getJudgeName(tokenizedDocument));
 
         return fileDetails;
+    }
+
+    private String getJudgeName(String[] tokenizedDocument) {
+        while(tokenizedDocument[currentIndex+=1].isEmpty()){}
+        String judgeName;
+        judgeName = tokenizedDocument[currentIndex]
+                .trim()
+                .substring(0, tokenizedDocument[currentIndex].indexOf(","));
+
+        return judgeName;
+    }
+
+    private String getAdvocateForRespondent(String[] tokenizedDocument) {
+        while(!tokenizedDocument[currentIndex+=1].trim().contains("RESPONDENT")){}
+        String advForRespondent;
+        advForRespondent =  tokenizedDocument[currentIndex].trim().split("RESPONDENT")[1].trim();
+
+        if(advForRespondent.contains("BY"))
+        {
+            advForRespondent = advForRespondent.split("BY")[1].trim();
+        }
+        if(advForRespondent.contains("&") || advForRespondent.contains("AND"))
+        {
+            while(tokenizedDocument[currentIndex+=1].isEmpty()){}
+            advForRespondent = advForRespondent + " " + tokenizedDocument[currentIndex];
+
+        }
+        return advForRespondent;
+
     }
 
     private String getAdvForAppellant(String[] tokenizedDocument) {

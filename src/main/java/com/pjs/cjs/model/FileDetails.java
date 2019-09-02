@@ -30,6 +30,9 @@ public class FileDetails {
     @Column(name = "advocates_for_respondent")
     private String advocatesForRespondent;
 
+    @Column(name = "judge_name")
+    private String judgeName;
+
     @OneToOne
     @MapsId
     private SimpleFile file;
@@ -107,6 +110,14 @@ public class FileDetails {
 
     public void setAdvocatesForRespondent(String advocatesForRespondent) {
         this.advocatesForRespondent = advocatesForRespondent;
+    }
+
+    public String getJudgeName() {
+        return judgeName;
+    }
+
+    public void setJudgeName(String judgeName) {
+        this.judgeName = judgeName;
     }
 }
 
