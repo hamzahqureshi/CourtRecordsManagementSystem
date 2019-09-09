@@ -32,8 +32,14 @@ public class FileParsingService {
         fileDetails.setAdvocatesForAppellant(getAdvForAppellant(tokenizedDocument));
         fileDetails.setAdvocatesForRespondent(getAdvocateForRespondent(tokenizedDocument));
         fileDetails.setJudgeName(getJudgeName(tokenizedDocument));
+        fileDetails.setResult(getResult(tokenizedDocument));
 
         return fileDetails;
+    }
+
+    private String getResult(String[] tokenizedDocument) {
+        currentIndex = currentIndex + (63 - currentIndex);
+        return tokenizedDocument[currentIndex].split(",")[0];
     }
 
     private String getJudgeName(String[] tokenizedDocument) {
